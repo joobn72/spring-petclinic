@@ -13,29 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.web;
+package org.springframework.samples.petclinic.web
 
-import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.Errors;
+import org.springframework.samples.petclinic.model.Pet
+import org.springframework.util.StringUtils
+import org.springframework.validation.Errors
 
 /**
  * <code>Validator</code> for <code>Pet</code> forms.
  *
  * @author Ken Krebs
  * @author Juergen Hoeller
+ * @author Outsider
  */
-public class PetValidator {
-
-    public void validate(Pet pet, Errors errors) {
-        String name = pet.getName();
-        if (!StringUtils.hasLength(name)) {
-            errors.rejectValue("name", "required", "required");
-        } else if (pet.isNew() && pet.getOwner().getPet(name, true) != null) {
-            errors.rejectValue("name", "duplicate", "already exists");
-        } else if (pet.isNew() && pet.getType() == null) {
-            errors.rejectValue("type", "required", "required");
-        }
+class PetValidator {
+  def validate(pet: Pet, errors: Errors) {
+    val name = pet.getName()
+    if (!StringUtils.hasLength(name)) {
+      errors.rejectValue("name", "required", "required")
+    } else if (pet.isNew() && pet.getOwner().getPet(name, true) != null) {
+      errors.rejectValue("name", "duplicate", "already exists")
+    } else if (pet.isNew() && pet.getType() == null) {
+      errors.rejectValue("type", "required", "required")
     }
-
+  }
 }
