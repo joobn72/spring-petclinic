@@ -1,5 +1,4 @@
 /*
-/*
  * Copyright 2002-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,31 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.model;
+package org.springframework.samples.petclinic.model
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.Entity
+import javax.persistence.Table
 
 /**
- * Simple domain object representing a list of veterinarians. Mostly here to be used for the 'vets' {@link
- * org.springframework.web.servlet.view.xml.MarshallingView}.
+ * Models a {@link Vet Vet's} specialty (for example, dentistry).
  *
- * @author Arjen Poutsma
+ * @author Juergen Hoeller
  */
-@XmlRootElement
-public class Vets {
-
-    private List<Vet> vets;
-
-    @XmlElement
-    public List<Vet> getVetList() {
-        if (vets == null) {
-            vets = new ArrayList<Vet>();
-        }
-        return vets;
-    }
+@Entity
+@Table(name = "specialties")
+class Specialty extends NamedEntity {
 
 }
+

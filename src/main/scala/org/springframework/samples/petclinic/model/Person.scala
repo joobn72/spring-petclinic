@@ -13,18 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.model;
+package org.springframework.samples.petclinic.model
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+
+import org.hibernate.validator.constraints.NotEmpty
+import scala.beans.BeanProperty
+;
 
 /**
- * Models a {@link Vet Vet's} specialty (for example, dentistry).
+ * Simple JavaBean domain object representing an person.
  *
- * @author Juergen Hoeller
+ * @author Ken Krebs
  */
-@Entity
-@Table(name = "specialties")
-public class Specialty extends NamedEntity {
+@MappedSuperclass
+class Person extends BaseEntity {
+
+  @Column(name = "first_name")
+  @NotEmpty
+  @BeanProperty
+  protected var firstName:String = _
+
+  @Column(name = "last_name")
+  @NotEmpty
+  @BeanProperty
+  protected var lastName:String = _
+
 
 }
+

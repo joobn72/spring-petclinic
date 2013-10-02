@@ -28,12 +28,12 @@ import org.springframework.validation.Errors
  */
 class PetValidator {
   def validate(pet: Pet, errors: Errors) {
-    val name = pet.getName()
+    val name = pet.name
     if (!StringUtils.hasLength(name)) {
       errors.rejectValue("name", "required", "required")
-    } else if (pet.isNew() && pet.getOwner().getPet(name, true) != null) {
+    } else if (pet.isNew && pet.owner.getPet(name, true) != null) {
       errors.rejectValue("name", "duplicate", "already exists")
-    } else if (pet.isNew() && pet.getType() == null) {
+    } else if (pet.isNew && pet.`type` == null) {
       errors.rejectValue("type", "required", "required")
     }
   }
