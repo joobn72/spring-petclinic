@@ -95,9 +95,9 @@ public class JdbcPetRepositoryImpl implements PetRepository {
         }
         Owner owner = this.ownerRepository.findById(pet.getOwnerId());
         owner.addPet(pet);
-        pet.setType(EntityUtils.getById(findPetTypes(), PetType.class, pet.getTypeId()));
+        pet.type_$eq(EntityUtils.getById(findPetTypes(), PetType.class, pet.getTypeId()));
 
-        List<Visit> visits = this.visitRepository.findByPetId(pet.getId());
+        List<Visit> visits = this.visitRepository.findByPetId(pet.id());
         for (Visit visit : visits) {
             pet.addVisit(visit);
         }
@@ -109,7 +109,7 @@ public class JdbcPetRepositoryImpl implements PetRepository {
         if (pet.isNew()) {
             Number newKey = this.insertPet.executeAndReturnKey(
                     createPetParameterSource(pet));
-            pet.setId(newKey.intValue());
+            pet.id_$eq(newKey.intValue());
         } else {
             this.namedParameterJdbcTemplate.update(
                     "UPDATE pets SET name=:name, birth_date=:birth_date, type_id=:type_id, " +
@@ -123,11 +123,11 @@ public class JdbcPetRepositoryImpl implements PetRepository {
      */
     private MapSqlParameterSource createPetParameterSource(Pet pet) {
         return new MapSqlParameterSource()
-                .addValue("id", pet.getId())
-                .addValue("name", pet.getName())
-                .addValue("birth_date", pet.getBirthDate().toDate())
-                .addValue("type_id", pet.getType().getId())
-                .addValue("owner_id", pet.getOwner().getId());
+                .addValue("id", pet.id())
+                .addValue("name", pet.name())
+                .addValue("birth_date", pet.birthDate().toDate())
+                .addValue("type_id", pet.type().id())
+                .addValue("owner_id", pet.owner().id());
     }
 
 }

@@ -82,7 +82,7 @@ public class JdbcVetRepositoryImpl implements VetRepository {
                             return Integer.valueOf(rs.getInt(1));
                         }
                     },
-                    vet.getId().intValue());
+                    vet.id());
             for (int specialtyId : vetSpecialtiesIds) {
                 Specialty specialty = EntityUtils.getById(specialties, Specialty.class, specialtyId);
                 vet.addSpecialty(specialty);

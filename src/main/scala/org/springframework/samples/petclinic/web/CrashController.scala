@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.web;
+package org.springframework.samples.petclinic.web
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod
 
 /**
  * Controller used to showcase what happens when an exception is thrown
@@ -28,13 +28,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *         /WEB-INF/mvc-core-config.xml
  */
 @Controller
-public class CrashController {
+class CrashController {
 
-    @RequestMapping(value = "/oups", method = RequestMethod.GET)
-    public String triggerException() {
-        throw new RuntimeException("Expected: controller used to showcase what " +
-                "happens when an exception is thrown");
-    }
+  @RequestMapping(value = Array("/oups"), method = Array(RequestMethod.GET))
+  def triggerException:String = {
+    throw new RuntimeException("Expected: controller used to showcase what " +
+      "happens when an exception is thrown")
+  }
 
 
 }

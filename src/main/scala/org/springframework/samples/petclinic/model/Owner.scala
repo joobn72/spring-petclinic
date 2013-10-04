@@ -110,10 +110,10 @@ class Owner extends Person {
   override def toString = {
     new ToStringCreator(this)
 
-      .append("id", this.getId())
+      .append("id", this.id)
       .append("new", this.isNew)
-      .append("lastName", this.getLastName())
-      .append("firstName", this.getFirstName())
+      .append("lastName", this.lastName)
+      .append("firstName", this.firstName)
       .append("address", this.address)
       .append("city", this.city)
       .append("telephone", this.telephone)

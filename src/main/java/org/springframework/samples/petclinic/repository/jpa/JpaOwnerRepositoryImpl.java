@@ -70,7 +70,7 @@ public class JpaOwnerRepositoryImpl implements OwnerRepository {
 
     @Override
     public void save(Owner owner) {
-    	if (owner.getId() == null) {
+    	if (owner.id() == 0) {
     		this.em.persist(owner);     		
     	}
     	else {

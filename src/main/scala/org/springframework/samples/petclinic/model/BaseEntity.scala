@@ -21,7 +21,6 @@ import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.MappedSuperclass
-import scala.beans.BeanProperty
 
 /**
  * Simple JavaBean domain object with an id property. Used as a base class for objects needing this property.
@@ -33,9 +32,10 @@ import scala.beans.BeanProperty
 class BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @BeanProperty
-  protected var id:Int = _
+  protected var _id:Int = _
 
+  def id:Int = _id
+  def id_=(id:Int) = _id = id
 
   def isNew:Boolean = id == 0
 

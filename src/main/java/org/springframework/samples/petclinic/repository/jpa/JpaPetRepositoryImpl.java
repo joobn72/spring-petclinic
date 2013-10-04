@@ -53,7 +53,7 @@ public class JpaPetRepositoryImpl implements PetRepository {
 
     @Override
     public void save(Pet pet) {
-    	if (pet.getId() == null) {
+    	if (pet.id() == 0) {
     		this.em.persist(pet);     		
     	}
     	else {

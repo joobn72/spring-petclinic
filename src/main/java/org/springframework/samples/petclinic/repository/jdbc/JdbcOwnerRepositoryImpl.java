@@ -114,7 +114,7 @@ public class JdbcOwnerRepositoryImpl implements OwnerRepository {
 
     public void loadPetsAndVisits(final Owner owner) {
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("id", owner.getId().intValue());
+        params.put("id", owner.id());
         final List<JdbcPet> pets = this.namedParameterJdbcTemplate.query(
                 "SELECT id, name, birth_date, type_id, owner_id FROM pets WHERE owner_id=:id",
                 params,
@@ -122,8 +122,8 @@ public class JdbcOwnerRepositoryImpl implements OwnerRepository {
         );
         for (JdbcPet pet : pets) {
             owner.addPet(pet);
-            pet.setType(EntityUtils.getById(getPetTypes(), PetType.class, pet.getTypeId()));
-            List<Visit> visits = this.visitRepository.findByPetId(pet.getId());
+            pet.type_$eq(EntityUtils.getById(getPetTypes(), PetType.class, pet.getTypeId()));
+            List<Visit> visits = this.visitRepository.findByPetId(pet.id());
             for (Visit visit : visits) {
                 pet.addVisit(visit);
             }
@@ -135,7 +135,7 @@ public class JdbcOwnerRepositoryImpl implements OwnerRepository {
         BeanPropertySqlParameterSource parameterSource = new BeanPropertySqlParameterSource(owner);
         if (owner.isNew()) {
             Number newKey = this.insertOwner.executeAndReturnKey(parameterSource);
-            owner.setId(newKey.intValue());
+            owner.id_$eq(newKey.intValue());
         } else {
             this.namedParameterJdbcTemplate.update(
                     "UPDATE owners SET first_name=:firstName, last_name=:lastName, address=:address, " +

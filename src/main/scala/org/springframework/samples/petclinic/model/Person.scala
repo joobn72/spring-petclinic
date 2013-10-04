@@ -32,14 +32,17 @@ class Person extends BaseEntity {
 
   @Column(name = "first_name")
   @NotEmpty
-  @BeanProperty
-  protected var firstName:String = _
+  protected var _firstName:String = _
 
   @Column(name = "last_name")
   @NotEmpty
-  @BeanProperty
-  protected var lastName:String = _
+  protected var _lastName:String = _
 
+  def firstName:String = _firstName
+  def firstName_=(firstName: String) = _firstName = firstName
+
+  def lastName:String = _lastName
+  def lastName_=(lastName: String) = _lastName = lastName
 
 }
 

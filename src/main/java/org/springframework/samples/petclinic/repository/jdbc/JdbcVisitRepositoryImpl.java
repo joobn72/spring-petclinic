@@ -66,7 +66,7 @@ public class JdbcVisitRepositoryImpl implements VisitRepository {
         if (visit.isNew()) {
             Number newKey = this.insertVisit.executeAndReturnKey(
                     createVisitParameterSource(visit));
-            visit.setId(newKey.intValue());
+            visit.id_$eq(newKey.intValue());
         } else {
             throw new UnsupportedOperationException("Visit update not supported");
         }
@@ -82,10 +82,10 @@ public class JdbcVisitRepositoryImpl implements VisitRepository {
      */
     private MapSqlParameterSource createVisitParameterSource(Visit visit) {
         return new MapSqlParameterSource()
-                .addValue("id", visit.getId())
-                .addValue("visit_date", visit.getDate().toDate())
-                .addValue("description", visit.getDescription())
-                .addValue("pet_id", visit.getPet().getId());
+                .addValue("id", visit.id())
+                .addValue("visit_date", visit.date().toDate())
+                .addValue("description", visit.description())
+                .addValue("pet_id", visit.pet().id());
     }
 
     @Override
@@ -96,10 +96,10 @@ public class JdbcVisitRepositoryImpl implements VisitRepository {
                     @Override
                     public Visit mapRow(ResultSet rs, int row) throws SQLException {
                         Visit visit = new Visit();
-                        visit.setId(rs.getInt("id"));
+                        visit.id_$eq(rs.getInt("id"));
                         Date visitDate = rs.getDate("visit_date");
-                        visit.setDate(new DateTime(visitDate));
-                        visit.setDescription(rs.getString("description"));
+                        visit.date_$eq(new DateTime(visitDate));
+                        visit.description_$eq(rs.getString("description"));
                         return visit;
                     }
                 },

@@ -31,10 +31,10 @@ class JdbcPetRowMapper implements ParameterizedRowMapper<JdbcPet> {
     @Override
     public JdbcPet mapRow(ResultSet rs, int rownum) throws SQLException {
         JdbcPet pet = new JdbcPet();
-        pet.setId(rs.getInt("id"));
-        pet.setName(rs.getString("name"));
+        pet.id_$eq(rs.getInt("id"));
+        pet.name_$eq(rs.getString("name"));
         Date birthDate = rs.getDate("birth_date");
-        pet.setBirthDate(new DateTime(birthDate));
+        pet.birthDate_$eq(new DateTime(birthDate));
         pet.setTypeId(rs.getInt("type_id"));
         pet.setOwnerId(rs.getInt("owner_id"));
         return pet;

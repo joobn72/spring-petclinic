@@ -13,17 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.web;
+package org.springframework.samples.petclinic.web
 
 
-import java.text.ParseException;
-import java.util.Collection;
-import java.util.Locale;
+import java.text.ParseException
+import java.util.Locale
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.Formatter;
-import org.springframework.samples.petclinic.model.PetType;
-import org.springframework.samples.petclinic.service.ClinicService;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.format.Formatter
+import org.springframework.samples.petclinic.model.PetType
+import org.springframework.samples.petclinic.service.ClinicService
+
+import scala.collection.JavaConversions._
 
 /**
  * Instructs Spring MVC on how to parse and print elements of type 'PetType'. Starting from Spring 3.0, Formatters have
@@ -37,30 +38,20 @@ import org.springframework.samples.petclinic.service.ClinicService;
  * @author Juergen Hoeller
  * @author Michael Isvy
  */
-public class PetTypeFormatter implements Formatter<PetType> {
+@Autowired
+class PetTypeFormatter(clinicService: ClinicService) extends Formatter[PetType] {
 
-    private final ClinicService clinicService;
+  override def print(petType: PetType, locale: Locale) = petType.name
 
-
-    @Autowired
-    public PetTypeFormatter(ClinicService clinicService) {
-        this.clinicService = clinicService;
-    }
-
-    @Override
-    public String print(PetType petType, Locale locale) {
-        return petType.name();
-    }
-
-    @Override
-    public PetType parse(String text, Locale locale) throws ParseException {
-        Collection<PetType> findPetTypes = this.clinicService.findPetTypes();
-        for (PetType type : findPetTypes) {
-            if (type.name().equals(text)) {
-                return type;
-            }
-        }
-        throw new ParseException("type not found: " + text, 0);
-    }
+  override def parse(text: String, locale: Locale):PetType = {
+    val findPetTypes = clinicService.findPetTypes()
+    findPetTypes.foreach(`type` => {
+      if (`type`.name == text) {
+        return `type`
+      }
+    })
+    throw new ParseException("type not found: " + text, 0)
+  }
 
 }
+
