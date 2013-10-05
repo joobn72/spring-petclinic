@@ -38,8 +38,7 @@ import scala.collection.JavaConversions._
  * @author Juergen Hoeller
  * @author Michael Isvy
  */
-@Autowired
-class PetTypeFormatter(clinicService: ClinicService) extends Formatter[PetType] {
+class PetTypeFormatter @Autowired() (clinicService: ClinicService) extends Formatter[PetType] {
 
   override def print(petType: PetType, locale: Locale) = petType.name
 

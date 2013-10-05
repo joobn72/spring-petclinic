@@ -23,6 +23,8 @@ import org.springframework.samples.petclinic.model.PetType
 import org.springframework.samples.petclinic.repository.PetRepository
 import org.springframework.stereotype.Repository
 
+import scala.collection.JavaConversions._
+
 /**
  * JPA implementation of the {@link PetRepository} interface.
  *
@@ -40,8 +42,8 @@ class JpaPetRepositoryImpl extends PetRepository {
 
   @SuppressWarnings(Array("unchecked"))
   override def findPetTypes:List[PetType] = {
-    em.createQuery("SELECT ptype FROM PetType ptype ORDER BY ptype.name")
-      .getResultList.asInstanceOf[List[PetType]]
+    em.createQuery("SELECT ptype FROM PetType ptype ORDER BY ptype._name")
+      .getResultList.toList.asInstanceOf[List[PetType]]
   }
 
   override def findById(id:Int):Pet = {

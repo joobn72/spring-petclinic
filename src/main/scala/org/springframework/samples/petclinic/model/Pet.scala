@@ -29,6 +29,7 @@ import org.joda.time.DateTime
 import org.springframework.format.annotation.DateTimeFormat
 
 import org.springframework.samples.petclinic.util.Joda._
+import scala.collection.JavaConversions._
 
 /**
  * Simple business object representing a pet.
@@ -54,8 +55,8 @@ class Pet extends NamedEntity {
   @JoinColumn(name = "owner_id")
   private var _owner:Owner = _
 
-  @OneToMany(cascade = Array(CascadeType.ALL), mappedBy = "pet", fetch = FetchType.EAGER)
-  private var visits:Set[Visit] = _
+  @OneToMany(cascade = Array(CascadeType.ALL), mappedBy = "_pet", fetch = FetchType.EAGER)
+  private var visits:java.util.Set[Visit] = _
 
   def birthDate:DateTime = _birthDate
   def birthDate_=(birthDate:DateTime) = _birthDate = birthDate

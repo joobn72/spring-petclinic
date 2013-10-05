@@ -20,6 +20,7 @@ import java.io.Serializable
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.persistence.Column
 import javax.persistence.MappedSuperclass
 
 /**
@@ -31,8 +32,9 @@ import javax.persistence.MappedSuperclass
 @MappedSuperclass
 class BaseEntity {
   @Id
+  @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  protected var _id:Int = _
+  var _id:Int = _
 
   def id:Int = _id
   def id_=(id:Int) = _id = id

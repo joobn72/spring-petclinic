@@ -39,8 +39,7 @@ import scala.collection.JavaConversions._
  * @author Michael Isvy
  */
 @Service
-@Autowired
-class ClinicServiceImpl(
+class ClinicServiceImpl @Autowired() (
     petRepository: PetRepository,
     vetRepository: VetRepository,
     ownerRepository: OwnerRepository,

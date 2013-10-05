@@ -53,15 +53,15 @@ class JpaOwnerRepositoryImpl extends OwnerRepository {
   def findByLastName(lastName:String):List[Owner] = {
     // using 'join fetch' because a single query should load both owners and pets
     // using 'left join fetch' because it might happen that an owner does not have pets yet
-    val query = em.createQuery("SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets WHERE owner.lastName LIKE :lastName")
+    val query = em.createQuery("SELECT DISTINCT owner FROM Owner owner left join fetch owner._pets WHERE owner._lastName LIKE :lastName")
     query.setParameter("lastName", lastName + "%")
-    query.getResultList.asInstanceOf[List[Owner]]
+    query.getResultList.toList.asInstanceOf[List[Owner]]
   }
 
   override def findById(id:Int):Owner = {
     // using 'join fetch' because a single query should load both owners and pets
     // using 'left join fetch' because it might happen that an owner does not have pets yet
-    val query = em.createQuery("SELECT owner FROM Owner owner left join fetch owner.pets WHERE owner.id =:id")
+    val query = em.createQuery("SELECT owner FROM Owner owner left join fetch owner._pets WHERE owner._id =:id")
     query.setParameter("id", id)
     query.getSingleResult.asInstanceOf[Owner]
   }

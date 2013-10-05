@@ -83,7 +83,7 @@ class JdbcPetRepositoryImpl(
     owner.addPet(pet)
     pet.type_=(getById(findPetTypes(), classOf[PetType], pet.typeId))
     // FIXME
-    //pet.`type` = EntityUtils.getById(findPetTypes(), classOf[PetType], pet.typeId)
+//    pet.`type` = getById(findPetTypes(), classOf[PetType], pet.typeId)
 
     val visits = visitRepository.findByPetId(pet.id)
     visits.foreach(visit => pet.addVisit(visit))

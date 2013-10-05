@@ -37,6 +37,6 @@ class NamedEntity extends BaseEntity {
 
   def name:String = _name
 
-  override def toString:String = name
+  override def toString:String = _name
 
 }

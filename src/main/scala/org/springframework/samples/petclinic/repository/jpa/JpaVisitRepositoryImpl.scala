@@ -52,7 +52,7 @@ class JpaVisitRepositoryImpl extends VisitRepository {
 
   @SuppressWarnings(Array("unchecked"))
   override def findByPetId(petId:Int):List[Visit] = {
-    val query = em.createQuery("SELECT visit FROM Visit v where v.pets.id= :id")
+    val query = em.createQuery("SELECT visit FROM Visit v where v._pets._id= :id")
     query.setParameter("id", petId)
     query.getResultList.asInstanceOf[List[Visit]]
   }

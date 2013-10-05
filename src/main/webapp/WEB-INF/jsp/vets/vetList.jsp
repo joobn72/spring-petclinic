@@ -18,16 +18,16 @@
 
     <datatables:table id="vets" data="${vets.vetList}" cdn="true" row="vet" theme="bootstrap2" cssClass="table table-striped" paginate="false" info="false">
         <datatables:column title="Name">
-            <c:out value="${vet.firstName} ${vet.lastName}"></c:out>
+            <c:out value="${vet.firstName()} ${vet.lastName()}"></c:out>
         </datatables:column>
         <datatables:column title="Specialties">
-            <c:forEach var="specialty" items="${vet.specialties}">
-                <c:out value="${specialty.name}"/>
+            <c:forEach var="specialty" items="${vet.getSpecialties()}">
+                <c:out value="${specialty.name()}"/>
             </c:forEach>
             <c:if test="${vet.nrOfSpecialties == 0}">none</c:if>
         </datatables:column>
     </datatables:table>
-    
+
     <table class="table-buttons">
         <tr>
             <td>

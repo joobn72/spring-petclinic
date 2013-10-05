@@ -26,6 +26,7 @@ import com.sun.syndication.feed.atom.Content
 import com.sun.syndication.feed.atom.Entry
 import com.sun.syndication.feed.atom.Feed
 
+import org.springframework.ui.Model
 import scala.collection.JavaConversions._
 
 /**
@@ -37,7 +38,7 @@ import scala.collection.JavaConversions._
 class VetsAtomView extends AbstractAtomFeedView {
 
   //@Override
-  def buildFeedMetadata(model: Map[String, Object], feed: Feed, request: HttpServletRequest) {
+  def buildFeedMetadata(model: Model, feed: Feed, request: HttpServletRequest) {
     feed.setId("tag:springsource.org")
     feed.setTitle("Veterinarians")
     //feed.setUpdated(date);
@@ -48,8 +49,8 @@ class VetsAtomView extends AbstractAtomFeedView {
     request: HttpServletRequest, response: HttpServletResponse) = {
 
     val vets = model.get("vets").asInstanceOf[Vets]
-    val vetList = vets.getVetList
-    val entries = List[Entry]()
+    val vetList = vets.getVetList.toList
+    var entries = List[Entry]()
 
     vetList.foreach(vet => {
       val entry = new Entry()
@@ -62,7 +63,8 @@ class VetsAtomView extends AbstractAtomFeedView {
       summary.setValue(vet.getSpecialties.toString())
       entry.setSummary(summary)
 
-      entries.add(entry)
+
+      entries = entries ::: List(entry)
     })
     response.setContentType("blabla")
     entries

@@ -37,7 +37,7 @@
         <div class="control-group" id="owner">
             <label class="control-label">Owner </label>
 
-            <c:out value="${pet.owner.firstName} ${pet.owner.lastName}"/>
+            <c:out value="${pet.owner().firstName()} ${pet.owner().lastName()}"/>
         </div>
         <petclinic:inputField label="Name" name="name"/>
         <petclinic:inputField label="Birth Date" name="birthDate"/>

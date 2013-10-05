@@ -44,8 +44,8 @@ class JpaVetRepositoryImpl extends VetRepository {
   @Cacheable(value = Array("vets"))
   @SuppressWarnings(Array("unchecked"))
   override def findAll:List[Vet] = {
-    em.createQuery("SELECT distinct vet FROM Vet vet left join fetch vet.specialties ORDER BY vet.lastName, vet.firstName")
-      .getResultList.asInstanceOf[List[Vet]]
+    em.createQuery("SELECT distinct vet FROM Vet vet left join fetch vet._specialties ORDER BY vet._lastName, vet._firstName")
+      .getResultList.toList.asInstanceOf[List[Vet]]
   }
 
 }

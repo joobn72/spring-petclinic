@@ -19,29 +19,29 @@
     <table class="table table-striped" style="width:600px;">
         <tr>
             <th>Name</th>
-            <td><b><c:out value="${owner.firstName} ${owner.lastName}"/></b></td>
+            <td><b><c:out value="${owner.firstName()} ${owner.lastName()}"/></b></td>
         </tr>
         <tr>
             <th>Address</th>
-            <td><c:out value="${owner.address}"/></td>
+            <td><c:out value="${owner.address()}"/></td>
         </tr>
         <tr>
             <th>City</th>
-            <td><c:out value="${owner.city}"/></td>
+            <td><c:out value="${owner.city()}"/></td>
         </tr>
         <tr>
             <th>Telephone</th>
-            <td><c:out value="${owner.telephone}"/></td>
+            <td><c:out value="${owner.telephone()}"/></td>
         </tr>
          <tr>
             <td> 
             	<spring:url value="{ownerId}/edit.html" var="editUrl">
-                    <spring:param name="ownerId" value="${owner.id}"/>
+                    <spring:param name="ownerId" value="${owner.id()}"/>
                 </spring:url>
                 <a href="${fn:escapeXml(editUrl)}" class="btn btn-info">Edit Owner</a></td>
             <td>
             	<spring:url value="{ownerId}/pets/new.html" var="addUrl">
-                    <spring:param name="ownerId" value="${owner.id}"/>
+                    <spring:param name="ownerId" value="${owner.id()}"/>
                 </spring:url>
                 <a href="${fn:escapeXml(addUrl)}"  class="btn btn-success">Add New Pet</a></td>
         </tr>
@@ -49,7 +49,7 @@
 
     <h2>Pets and Visits</h2>
 
-    <c:forEach var="pet" items="${owner.pets}">
+    <c:forEach var="pet" items="${owner.getPets()}">
         <table class="table" style="width:600px;">
             <tr>
                 <td valign="top" style="width: 120px;">

@@ -30,8 +30,10 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.SessionAttributes
 import org.springframework.web.bind.support.SessionStatus
+import org.springframework.ui.Model
 
 import scala.collection.JavaConversions._
+import scala.collection.mutable.ListBuffer
 
 /**
  * @author Juergen Hoeller
@@ -40,11 +42,13 @@ import scala.collection.JavaConversions._
  */
 @Controller
 @SessionAttributes(Array("pet"))
-@Autowired
-class PetController(clinicService: ClinicService) {
+class PetController @Autowired() (clinicService: ClinicService) {
 
   @ModelAttribute("types")
-  def populatePetTypes = clinicService.findPetTypes()
+  def populatePetTypes = {
+    val x: java.util.List[PetType] = ListBuffer(clinicService.findPetTypes(): _*)
+    x
+  }
 
   @InitBinder
   def setAllowedFields(dataBinder: WebDataBinder) {
@@ -52,11 +56,11 @@ class PetController(clinicService: ClinicService) {
   }
 
   @RequestMapping(value = Array("/owners/{ownerId}/pets/new"), method = Array(RequestMethod.GET))
-  def initCreationForm(@PathVariable("ownerId") ownerId:Int, model: Map[String, Object]) = {
+  def initCreationForm(@PathVariable("ownerId") ownerId:Int, model: Model) = {
     val owner = clinicService.findOwnerById((ownerId))
     val pet = new Pet()
     owner.addPet(pet)
-    model.put("pet", pet)
+    model.addAttribute("pet", pet)
     "pets/createOrUpdatePetForm"
   }
 
@@ -73,9 +77,9 @@ class PetController(clinicService: ClinicService) {
   }
 
   @RequestMapping(value = Array("/owners/*/pets/{petId}/edit"), method = Array(RequestMethod.GET))
-  def initUpdateForm(@PathVariable("petId") petId: Int, model: Map[String, Object]) = {
+  def initUpdateForm(@PathVariable("petId") petId: Int, model: Model) = {
     val pet = clinicService.findPetById(petId)
-    model.put("pet", pet)
+    model.addAttribute("pet", pet)
     "pets/createOrUpdatePetForm"
   }
 

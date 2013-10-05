@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.SessionAttributes
 import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.bind.support.SessionStatus
 import org.springframework.web.servlet.ModelAndView
+import org.springframework.ui.Model
 
 import scala.collection.JavaConversions._
 
@@ -42,8 +43,7 @@ import scala.collection.JavaConversions._
  */
 @Controller
 @SessionAttributes(Array("visit"))
-@Autowired
-class VisitController(clinicService: ClinicService) {
+class VisitController @Autowired() (clinicService: ClinicService) {
 
   @InitBinder
   def setAllowedFields(dataBinder: WebDataBinder) {
@@ -51,11 +51,11 @@ class VisitController(clinicService: ClinicService) {
   }
 
   @RequestMapping(value = Array("/owners/*/pets/{petId}/visits/new"), method = Array(RequestMethod.GET))
-  def initNewVisitForm(@PathVariable("petId") petId:Int, model: Map[String, Object]) = {
+  def initNewVisitForm(@PathVariable("petId") petId:Int, model:Model) = {
     val pet = clinicService.findPetById(petId)
     val visit = new Visit()
     pet.addVisit(visit)
-    model.put("visit", visit)
+    model.addAttribute("visit", visit)
     "pets/createOrUpdateVisitForm"
   }
 

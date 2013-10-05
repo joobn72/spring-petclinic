@@ -17,6 +17,7 @@ package org.springframework.samples.petclinic.model
 
 import javax.xml.bind.annotation.XmlElement
 import javax.xml.bind.annotation.XmlRootElement
+import scala.collection.JavaConversions._
 
 /**
  * Simple domain object representing a list of veterinarians. Mostly here to be used for the 'vets' {@link
@@ -27,11 +28,11 @@ import javax.xml.bind.annotation.XmlRootElement
 @XmlRootElement
 class Vets {
 
-    private var vets:List[Vet] = _
+    var vets:java.util.Collection[Vet] = _
 
 
     @XmlElement
-    def getVetList = {
+    def getVetList:java.util.Collection[Vet] = {
       if (vets == null) {
         vets = List[Vet]()
       }

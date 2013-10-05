@@ -16,12 +16,14 @@
 package org.springframework.samples.petclinic.web
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.samples.petclinic.model.Vet
 import org.springframework.samples.petclinic.model.Vets
 import org.springframework.samples.petclinic.service.ClinicService
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
 
 import scala.collection.JavaConversions._
+import org.springframework.ui.Model
 
 /**
  * @author Juergen Hoeller
@@ -30,16 +32,15 @@ import scala.collection.JavaConversions._
  * @author Arjen Poutsma
  */
 @Controller
-@Autowired
-class VetController(clinicService:ClinicService) {
+class VetController @Autowired() (clinicService:ClinicService) {
 
   @RequestMapping(Array("/vets"))
-  def showVetList(model:Map[String, Object]) = {
+  def showVetList(model:Model) = {
     // Here we are returning an object of type 'Vets' rather than a collection of Vet objects
     // so it is simpler for Object-Xml mapping
     val vets = new Vets
-    vets.getVetList ::: clinicService.findVets().toList
-    model.put("vets", vets)
+    vets.vets = vets.getVetList.toList ::: clinicService.findVets()
+    model.addAttribute("vets", vets)
     "vets/vetList"
   }
 

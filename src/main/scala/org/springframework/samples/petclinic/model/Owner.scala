@@ -25,6 +25,8 @@ import javax.validation.constraints.Digits
 import org.hibernate.validator.constraints.NotEmpty
 import org.springframework.core.style.ToStringCreator
 
+import scala.collection.JavaConversions._
+
 /**
  * Simple JavaBean domain object representing an owner.
  *
@@ -49,8 +51,8 @@ class Owner extends Person {
   @Digits(fraction = 0, integer = 10)
   private var _telephone:String = _
 
-  @OneToMany(cascade = Array(CascadeType.ALL), mappedBy = "owner")
-  private var _pets:Set[Pet] = _
+  @OneToMany(cascade = Array(CascadeType.ALL), mappedBy = "_owner")
+  private var _pets:java.util.Set[Pet] = _
 
   def address:String = _address
   def address_=(address:String) = _address = address

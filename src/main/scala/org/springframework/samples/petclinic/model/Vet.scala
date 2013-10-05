@@ -23,6 +23,8 @@ import javax.persistence.ManyToMany
 import javax.persistence.Table
 import javax.xml.bind.annotation.XmlElement
 
+import scala.collection.JavaConversions._
+
 /**
  * Simple JavaBean domain object representing a veterinarian.
  *
@@ -38,7 +40,7 @@ class Vet extends Person {
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "vet_specialties", joinColumns = Array(new JoinColumn(name = "vet_id")),
   inverseJoinColumns = Array(new JoinColumn(name = "specialty_id")))
-  private var _specialties:Set[Specialty] = _
+  private var _specialties:java.util.Set[Specialty] = _
 
   /* protected */
   def setSpecialtiesInternal_=(specialties:Set[Specialty]) = _specialties = specialties
@@ -53,7 +55,7 @@ class Vet extends Person {
   @XmlElement
   def getSpecialties = {
     val sortedSpecs:List[Specialty] = getSpecialtiesInternal.toList
-    sortedSpecs.sortBy(x => x.name)
+    asJavaCollection(sortedSpecs.sortBy(x => x.name))
   }
 
   def getNrOfSpecialties = getSpecialtiesInternal.size

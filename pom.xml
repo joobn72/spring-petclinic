@@ -74,19 +74,7 @@
             <name>SpringSource Milestone Repository</name>
             <url>http://repo.springsource.org/milestone</url>
         </repository>
-        <repository>
-            <id>scala-tools.org</id>
-            <name>Scala-tools Maven2 Repository</name>
-            <url>http://scala-tools.org/repo-releases</url>
-        </repository>
     </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>scala-tools.org</id>
-            <name>Scala-tools Maven2 Repository</name>
-            <url>http://scala-tools.org/repo-releases</url>
-        </pluginRepository>
-    </pluginRepositories>
 
 	<dependencies>
         <dependency>
@@ -122,6 +110,11 @@
 			<version>${jaxb-impl.version}</version>
 			<scope>provided</scope>
 		</dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.scalaxb</groupId>-->
+            <!--<artifactId>scalaxb_2.10</artifactId>-->
+            <!--<version>1.1.2</version>-->
+        <!--</dependency>-->
 		<!-- SPRING, SPRING, SPRINGITY SPRING -->
         <dependency>
 			<groupId>org.springframework.data</groupId>
@@ -407,24 +400,11 @@
 		    <directory>${project.basedir}/src/test/resources</directory>
 		  </testResource>
 		</testResources>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>net.alchim31.maven</groupId>
-                    <artifactId>scala-maven-plugin</artifactId>
-                    <version>3.1.6</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.0</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
 		<plugins>
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
+                <version>3.1.6</version>
                 <executions>
                     <execution>
                         <id>scala-compile-first</id>
@@ -452,6 +432,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+                <version>3.0</version>
 				<configuration>
 					<compilerArguments>
 						<Xlint />
@@ -461,14 +442,6 @@
 					<target>${java.version}</target>
 					<showWarnings>true</showWarnings>
 				</configuration>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

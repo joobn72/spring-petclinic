@@ -42,8 +42,7 @@ import scala.collection.JavaConversions._
  */
 @Controller
 @SessionAttributes(types = Array(classOf[Owner]))
-@Autowired
-class OwnerController(clinicService:ClinicService) {
+class OwnerController @Autowired() (clinicService:ClinicService) {
 
 
   @InitBinder
@@ -52,9 +51,9 @@ class OwnerController(clinicService:ClinicService) {
   }
 
   @RequestMapping(value = Array("/owners/new"), method = Array(RequestMethod.GET))
-  def initCreationForm(model: Map[String, Object]) = {
+  def initCreationForm(model: Model) = {
     val owner = new Owner()
-    model.put("owner", owner)
+    model.addAttribute("owner", owner)
     "owners/createOrUpdateOwnerForm"
   }
 
@@ -70,13 +69,13 @@ class OwnerController(clinicService:ClinicService) {
   }
 
   @RequestMapping(value = Array("/owners/find"), method = Array(RequestMethod.GET))
-  def initFindForm(model: Map[String, Object]) = {
-    model.put("owner", new Owner())
+  def initFindForm(model: Model) = {
+    model.addAttribute("owner", new Owner())
     "owners/findOwners"
   }
 
   @RequestMapping(value = Array("/owners"), method = Array(RequestMethod.GET))
-  def processFindForm(owner: Owner, result:BindingResult, model: Map[String, Object]):String = {
+  def processFindForm(owner: Owner, result:BindingResult, model: Model):String = {
 
     // allow parameterless GET request for /owners to return all records
     if (owner.lastName == null) {
@@ -86,18 +85,18 @@ class OwnerController(clinicService:ClinicService) {
     // find owners by last name
     val results = clinicService.findOwnerByLastName(owner.lastName)
 
-    if (results.size() < 1) {
+    if (results.size < 1) {
       // no owners found
       result.rejectValue("lastName", "notFound", "not found")
       return "owners/findOwners"
     }
-    if (results.size() > 1) {
+    if (results.size > 1) {
       // multiple owners found
-      model.put("selections", results)
+      model.addAttribute("selections", results)
       "owners/ownersList"
     } else {
       // 1 owner found
-      val nextOwner = results.iterator().next()
+      val nextOwner = results.iterator.next()
       "redirect:/owners/" + nextOwner.id
     }
   }
