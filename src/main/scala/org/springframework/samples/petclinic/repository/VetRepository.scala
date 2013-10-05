@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.repository;
+package org.springframework.samples.petclinic.repository
 
-import java.util.Collection;
-
-import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.model.Vet;
+import org.springframework.dao.DataAccessException
+import org.springframework.samples.petclinic.model.Vet
 
 /**
  * Repository class for <code>Vet</code> domain objects All method names are compliant with Spring Data naming
@@ -29,14 +27,14 @@ import org.springframework.samples.petclinic.model.Vet;
  * @author Sam Brannen
  * @author Michael Isvy
  */
-public interface VetRepository {
+trait VetRepository {
 
-    /**
-     * Retrieve all <code>Vet</code>s from the data store.
-     *
-     * @return a <code>Collection</code> of <code>Vet</code>s
-     */
-    Collection<Vet> findAll() throws DataAccessException;
+  /**
+   * Retrieve all <code>Vet</code>s from the data store.
+   *
+   * @return a <code>Collection</code> of <code>Vet</code>s
+   */
+  def findAll:List[Vet]
 
 
 }

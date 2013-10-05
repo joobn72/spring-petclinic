@@ -13,17 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.repository.jpa;
+package org.springframework.samples.petclinic.repository.jpa
 
-import java.util.Collection;
+import javax.persistence.EntityManager
+import javax.persistence.PersistenceContext
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import org.springframework.cache.annotation.Cacheable
+import org.springframework.samples.petclinic.model.Vet
+import org.springframework.samples.petclinic.repository.VetRepository
+import org.springframework.stereotype.Repository
 
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.samples.petclinic.model.Vet;
-import org.springframework.samples.petclinic.repository.VetRepository;
-import org.springframework.stereotype.Repository;
+import scala.collection.JavaConversions._
 
 /**
  * JPA implementation of the {@link VetRepository} interface.
@@ -35,17 +35,17 @@ import org.springframework.stereotype.Repository;
  * @since 22.4.2006
  */
 @Repository
-public class JpaVetRepositoryImpl implements VetRepository {
+class JpaVetRepositoryImpl extends VetRepository {
 
-    @PersistenceContext
-    private EntityManager em;
+  @PersistenceContext
+  private var em:EntityManager = _
 
 
-    @Override
-    @Cacheable(value = "vets")
-    @SuppressWarnings("unchecked")
-    public Collection<Vet> findAll() {
-        return this.em.createQuery("SELECT distinct vet FROM Vet vet left join fetch vet.specialties ORDER BY vet.lastName, vet.firstName").getResultList();
-    }
+  @Cacheable(value = Array("vets"))
+  @SuppressWarnings(Array("unchecked"))
+  override def findAll:List[Vet] = {
+    em.createQuery("SELECT distinct vet FROM Vet vet left join fetch vet.specialties ORDER BY vet.lastName, vet.firstName")
+      .getResultList.asInstanceOf[List[Vet]]
+  }
 
 }

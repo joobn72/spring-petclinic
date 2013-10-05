@@ -13,30 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.repository.jdbc;
+package org.springframework.samples.petclinic.repository.jdbc
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Date;
+import java.sql.ResultSet
+import java.sql.SQLException
 
-import org.joda.time.DateTime;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.joda.time.DateTime
+import org.springframework.jdbc.core.simple.ParameterizedRowMapper
+
+import scala.collection.JavaConversions._
 
 /**
  * {@link ParameterizedRowMapper} implementation mapping data from a {@link ResultSet} to the corresponding properties
  * of the {@link JdbcPet} class.
  */
-class JdbcPetRowMapper implements ParameterizedRowMapper<JdbcPet> {
+class JdbcPetRowMapper extends ParameterizedRowMapper[JdbcPet] {
 
-    @Override
-    public JdbcPet mapRow(ResultSet rs, int rownum) throws SQLException {
-        JdbcPet pet = new JdbcPet();
-        pet.id_$eq(rs.getInt("id"));
-        pet.name_$eq(rs.getString("name"));
-        Date birthDate = rs.getDate("birth_date");
-        pet.birthDate_$eq(new DateTime(birthDate));
-        pet.setTypeId(rs.getInt("type_id"));
-        pet.setOwnerId(rs.getInt("owner_id"));
-        return pet;
-    }
+  override def mapRow(rs:ResultSet, rownum:Int) = {
+    val pet = new JdbcPet()
+    pet.id = rs.getInt("id")
+    pet.name = rs.getString("name")
+    val birthDate = rs.getDate("birth_date")
+    pet.birthDate = new DateTime(birthDate)
+    pet.typeId = rs.getInt("type_id")
+    pet.ownerId = rs.getInt("owner_id")
+    pet
+  }
 }

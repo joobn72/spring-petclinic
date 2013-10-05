@@ -13,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.repository.springdatajpa;
+package org.springframework.samples.petclinic.repository.springdatajpa
 
-import java.util.List;
-
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.Repository;
-import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.model.PetType;
-import org.springframework.samples.petclinic.repository.PetRepository;
+import org.springframework.dao.DataAccessException
+import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.Repository
+import org.springframework.samples.petclinic.model.Pet
+import org.springframework.samples.petclinic.model.PetType
+import org.springframework.samples.petclinic.repository.PetRepository
 
 /**
  * Spring Data JPA specialization of the {@link PetRepository} interface
@@ -30,9 +28,8 @@ import org.springframework.samples.petclinic.repository.PetRepository;
  * @author Michael Isvy
  * @since 15.1.2013
  */
-public interface SpringDataPetRepository extends PetRepository, Repository<Pet, Integer> {
+trait SpringDataPetRepository extends PetRepository with Repository[Pet, java.lang.Integer] {
 
-    @Override
-    @Query("SELECT ptype FROM PetType ptype ORDER BY ptype.name")
-    List<PetType> findPetTypes() throws DataAccessException;
+  @Query("SELECT ptype FROM PetType ptype ORDER BY ptype.name")
+  override def findPetTypes:List[PetType]
 }

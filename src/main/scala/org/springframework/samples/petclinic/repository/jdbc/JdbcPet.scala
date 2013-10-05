@@ -13,17 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.repository.springdatajpa;
+package org.springframework.samples.petclinic.repository.jdbc
 
-import org.springframework.data.repository.Repository;
-import org.springframework.samples.petclinic.model.Visit;
-import org.springframework.samples.petclinic.repository.VisitRepository;
+import org.springframework.samples.petclinic.model.Pet
 
 /**
- * Spring Data JPA specialization of the {@link VisitRepository} interface
+ * Subclass of Pet that carries temporary id properties which are only relevant for a JDBC implmentation of the
+ * ClinicService.
  *
- * @author Michael Isvy
- * @since 15.1.2013
+ * @author Juergen Hoeller
+ * @see JdbcClinicImpl
  */
-public interface SpringDataVisitRepository extends VisitRepository, Repository<Visit, Integer> {
+class JdbcPet extends Pet {
+
+  private var _typeId:Int = _
+
+  private var _ownerId:Int = _
+
+
+  def typeId:Int = _typeId
+  def typeId_=(typeId:Int) = _typeId = typeId
+
+  def ownerId:Int = _ownerId
+  def ownerId_=(ownerId:Int) = _ownerId = ownerId
+
 }

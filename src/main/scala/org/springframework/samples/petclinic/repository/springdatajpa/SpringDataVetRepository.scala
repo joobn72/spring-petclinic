@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.repository.springdatajpa;
+package org.springframework.samples.petclinic.repository.springdatajpa
 
-import org.springframework.data.repository.Repository;
-import org.springframework.samples.petclinic.model.Vet;
-import org.springframework.samples.petclinic.repository.VetRepository;
+import org.springframework.data.repository.Repository
+import org.springframework.samples.petclinic.model.Vet
+import org.springframework.samples.petclinic.repository.VetRepository
 
 /**
  * Spring Data JPA specialization of the {@link VetRepository} interface
@@ -25,5 +25,5 @@ import org.springframework.samples.petclinic.repository.VetRepository;
  * @author Michael Isvy
  * @since 15.1.2013
  */
-public interface SpringDataVetRepository extends VetRepository, Repository<Vet, Integer> {
+trait SpringDataVetRepository extends VetRepository with Repository[Vet, java.lang.Integer] {
 }
