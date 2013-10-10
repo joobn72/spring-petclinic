@@ -23,13 +23,18 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
     </context-param>
 	-->
 
-    <!--
-		- Location of the XML file that defines the root application context.
-		- Applied by ContextLoaderListener.
-	-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring/business-config.xml, classpath:spring/tools-config.xml</param-value>
+        <param-value> org.springframework.samples.petclinic.BusinessConfig
+                    , org.springframework.samples.petclinic.ToolsConfig
+        </param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>
+            org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+        </param-value>
     </context-param>
 
     <listener>
@@ -44,7 +49,11 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:spring/mvc-core-config.xml</param-value>
+            <param-value>org.springframework.samples.petclinic.MvcWebConfig</param-value>
+        </init-param>
+        <init-param>
+            <param-name>contextClass</param-name>
+            <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
