@@ -13,6 +13,7 @@ import org.springframework.samples.petclinic.model.Vets;
 import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.samples.petclinic.web.PetTypeFormatter;
 import org.springframework.samples.petclinic.web.VetsAtomView;
+import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
@@ -70,13 +71,14 @@ public class MvcWebConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public ViewResolver contentNegotiatingViewResolver() {
+    public ViewResolver contentNegotiatingViewResolver(ContentNegotiationManager contentNegotiationManager) {
         List<ViewResolver> viewResolvers = new ArrayList<ViewResolver>();
         viewResolvers.add(beanNameViewResolver());
         viewResolvers.add(internalResourceViewResolver());
 
         ContentNegotiatingViewResolver viewResolver = new ContentNegotiatingViewResolver();
         viewResolver.setViewResolvers(viewResolvers);
+        viewResolver.setContentNegotiationManager(contentNegotiationManager);
 
         return viewResolver;
     }
